@@ -257,7 +257,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
   }
   </script>
-  
+  <link rel="stylesheet" href="common.css" />
 </head>
 
 <body>
@@ -270,11 +270,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     <div class="example" id="__react-content"></div>
 
     <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint react/no-multi-comp: 0 */</span>
-<span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-slider/assets/index.less'</span>);
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'scalable-slider/assets/index.css'</span>);
 
 <span class="hljs-keyword">const</span> React = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react'</span>);
 <span class="hljs-keyword">const</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
-<span class="hljs-keyword">const</span> Slider = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-slider'</span>);
+<span class="hljs-keyword">const</span> Slider = <span class="hljs-built_in">require</span>(<span class="hljs-string">'scalable-slider'</span>);
 <span class="hljs-keyword">const</span> createSliderWithTooltip = Slider.createSliderWithTooltip;
 <span class="hljs-keyword">const</span> SliderWithTooltip = createSliderWithTooltip(Slider);
 
@@ -358,13 +358,16 @@ ReactDOM.render(
       <span class="hljs-tag">&lt;<span class="hljs-title">SliderWithTooltip</span>
         <span class="hljs-attribute">tipTransitionName</span>=<span class="hljs-value">"rc-slider-tooltip-zoom-down"</span>
         <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{log}</span>
-        <span class="hljs-attribute">rangeArray</span>=<span class="hljs-value">{[0,</span> <span class="hljs-attribute">10</span>, <span class="hljs-attribute">100</span>]}
+        <span class="hljs-attribute">min</span>=<span class="hljs-value">{0}</span>
+        <span class="hljs-attribute">max</span>=<span class="hljs-value">{200}</span>
+        <span class="hljs-attribute">defaultValue</span>=<span class="hljs-value">{100}</span>
+        <span class="hljs-attribute">rangeArray</span>=<span class="hljs-value">{[0,</span> <span class="hljs-attribute">10</span>, <span class="hljs-attribute">200</span>]}
         <span class="hljs-attribute">scalable</span>
       /&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Basic Slider<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">Slider</span> <span class="hljs-attribute">tipTransitionName</span>=<span class="hljs-value">"rc-slider-tooltip-zoom-down"</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{log}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">Slider</span> <span class="hljs-attribute">defaultValue</span>=<span class="hljs-value">{100}</span> <span class="hljs-attribute">tipTransitionName</span>=<span class="hljs-value">"rc-slider-tooltip-zoom-down"</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{log}</span> /&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{style}</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Basic Slider，`step=20`<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>

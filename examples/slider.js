@@ -3,22 +3,22 @@ webpackJsonp([3],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(302);
+	module.exports = __webpack_require__(330);
 
 
 /***/ },
 
-/***/ 302:
+/***/ 330:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	/* eslint react/no-multi-comp: 0 */
-	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-slider/assets/index.less\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	__webpack_require__(3);
 	
-	var React = __webpack_require__(4);
-	var ReactDOM = __webpack_require__(35);
-	var Slider = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-slider\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var React = __webpack_require__(5);
+	var ReactDOM = __webpack_require__(36);
+	var Slider = __webpack_require__(256);
 	var createSliderWithTooltip = Slider.createSliderWithTooltip;
 	var SliderWithTooltip = createSliderWithTooltip(Slider);
 	
@@ -116,7 +116,10 @@ webpackJsonp([3],{
 	    React.createElement(SliderWithTooltip, {
 	      tipTransitionName: 'rc-slider-tooltip-zoom-down',
 	      onChange: log,
-	      rangeArray: [0, 10, 100],
+	      min: 0,
+	      max: 200,
+	      defaultValue: 100,
+	      rangeArray: [0, 10, 200],
 	      scalable: true
 	    })
 	  ),
@@ -128,7 +131,7 @@ webpackJsonp([3],{
 	      null,
 	      'Basic Slider'
 	    ),
-	    React.createElement(Slider, { tipTransitionName: 'rc-slider-tooltip-zoom-down', onChange: log })
+	    React.createElement(Slider, { defaultValue: 100, tipTransitionName: 'rc-slider-tooltip-zoom-down', onChange: log })
 	  ),
 	  React.createElement(
 	    'div',
