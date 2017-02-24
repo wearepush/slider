@@ -9,14 +9,16 @@ const Marks = ({
   upperBound,
   lowerBound,
   max, min,
+  scalable,
+  rangeArray,
 }) => {
-  const marksKeys = Object.keys(marks);
+  const marksKeys = scalable ? rangeArray.slice(1, rangeArray.length - 1) : Object.keys(marks);
   const marksCount = marksKeys.length;
-  const unit = 100 / (marksCount - 1);
+  const unit = 100 / (marksCount);
   const markWidth = unit * 0.9;
 
   const range = max - min;
-  const elements = marksKeys.map(parseFloat).sort((a, b) => a - b).map(point => {
+  const elements = marksKeys.map(parseFloat).sort((a, b) => a - b).map((point, i) => {
     const isActive = (!included && point === upperBound) ||
             (included && point <= upperBound && point >= lowerBound);
     const markClassName = classNames({
@@ -26,18 +28,21 @@ const Marks = ({
 
     const bottomStyle = {
       marginBottom: '-50%',
-      bottom: `${(point - min) / range * 100}%`,
+      bottom: scalable ?
+          `${(i + 1) * (100 / (marksCount + 1))}%`
+        :
+          `${(point - min) / range * 100}%`,
     };
 
     const leftStyle = {
       width: `${markWidth}%`,
       marginLeft: `${-markWidth / 2}%`,
-      left: `${(point - min) / range * 100}%`,
+      left: scalable ? `${(i + 1) * (100 / (marksCount + 1))}%` : `${(point - min) / range * 100}%`,
     };
 
     const style = vertical ? bottomStyle : leftStyle;
 
-    const markPoint = marks[point];
+    const markPoint = scalable ? point : marks[point];
     const markPointIsObject = typeof markPoint === 'object' &&
             !React.isValidElement(markPoint);
     const markLabel = markPointIsObject ? markPoint.label : markPoint;

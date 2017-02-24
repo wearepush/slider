@@ -1,9 +1,9 @@
 /* eslint react/no-multi-comp: 0 */
-require('rc-slider/assets/index.less');
+require('scalable-slider/assets/index.less');
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const Slider = require('rc-slider');
+const Slider = require('scalable-slider');
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const SliderWithTooltip = createSliderWithTooltip(Slider);
 
@@ -87,13 +87,16 @@ ReactDOM.render(
       <SliderWithTooltip
         tipTransitionName="rc-slider-tooltip-zoom-down"
         onChange={log}
-        rangeArray={[0, 10, 100]}
+        min={0}
+        max={200}
+        defaultValue={100}
+        rangeArray={[0, 10, 200]}
         scalable
       />
     </div>
     <div style={style}>
       <p>Basic Slider</p>
-      <Slider tipTransitionName="rc-slider-tooltip-zoom-down" onChange={log} />
+      <Slider defaultValue={100} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={log} />
     </div>
     <div style={style}>
       <p>Basic Slider，`step=20`</p>

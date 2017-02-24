@@ -1,22 +1,21 @@
 {
-  "name": "rc-slider",
+  "name": "scalable-slider",
 
-  "version": "6.1.2",
-  "description": "Slider UI component for React",
+  "version": "0.0.1",
+  "description": "Scalable slider UI component for React",
   "keywords": [
     "react",
-    "react-component",
     "react-slider",
     "slider"
   ],
-  "homepage": "http://github.com/react-component/slider",
-  "author": "sima.zhang1990@gmail.com",
+  "homepage": "http://github.com/wearepush/slider",
+  "author": "pushukraine@gmail.com",
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/slider.git"
+    "url": "git@github.com:wearepush/slider.git"
   },
   "bugs": {
-    "url": "http://github.com/react-component/slider/issues"
+    "url": "http://github.com/wearepush/slider/issues"
   },
   "files": [
     "assets/*.css",
@@ -26,7 +25,7 @@
   "license": "MIT",
   "main": "./lib/index.js",
   "entry": {
-    "rc-slider": ["./assets/index.less", "./src/index.js"]
+    "scalable-slider": ["./assets/index.less", "./src/index.js"]
   },
   "style": "./assets/index.css",
   "config": {

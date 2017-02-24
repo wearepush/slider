@@ -1,27 +1,7 @@
-# rc-slider
+# scalable-slider
 ---
 
-Slider UI component for React
-
-[![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
-[![gemnasium deps][gemnasium-image]][gemnasium-url]
-[![node version][node-image]][node-url]
-[![npm download][download-image]][download-url]
-
-[npm-image]: http://img.shields.io/npm/v/rc-slider.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/rc-slider
-[travis-image]: https://img.shields.io/travis/react-component/slider.svg?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/slider
-[coveralls-image]: https://img.shields.io/coveralls/react-component/slider.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/slider?branch=master
-[gemnasium-image]: http://img.shields.io/gemnasium/react-component/slider.svg?style=flat-square
-[gemnasium-url]: https://gemnasium.com/react-component/slider
-[node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
-[node-url]: http://nodejs.org/download/
-[download-image]: https://img.shields.io/npm/dm/rc-slider.svg?style=flat-square
-[download-url]: https://npmjs.org/package/rc-slider
+Slider UI component for React forked from [https://github.com/react-component/slider](react-component/slider)
 
 ## Screenshots
 
@@ -41,21 +21,19 @@ Slider UI component for React
 ## Install
 
 ```bash
-npm install --save rc-slider
+npm install --save scalable-slider
 ```
-
-[![rc-slider](https://nodei.co/npm/rc-slider.png)](https://npmjs.org/package/rc-slider)
 
 ## Usage
 
 ````js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Slider, { Range } from 'rc-slider';
+import Slider, { Range } from 'scalable-slider';
 // We can just import Slider or Range to reduce bundle size
-// import Slider from 'rc-slider/lib/Slider';
-// import Range from 'rc-slider/lib/Range';
-import 'rc-slider/assets/index.css';
+// import Slider from 'scalable-slider/lib/Slider';
+// import Range from 'scalable-slider/lib/Range';
+import 'scalable-slider/assets/index.css';
 
 ReactDOM.render(
   <div>
@@ -73,7 +51,7 @@ ReactDOM.render(
 An extension to make Slider or Range support Tooltip on handle.
 
 ```jsx
-const Slider = require('rc-slider');
+const Slider = require('scalable-slider');
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 ```
@@ -140,4 +118,4 @@ Online examples: [http://react-component.github.io/slider/](http://react-compone
 
 ## License
 
-`rc-slider` is released under the MIT license.
+`scalable-slider` is released under the MIT license.
