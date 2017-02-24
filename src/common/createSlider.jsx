@@ -30,6 +30,8 @@ export default function createSlider(Component) {
       dots: PropTypes.bool,
       vertical: PropTypes.bool,
       style: PropTypes.object,
+      scalable: PropTypes.bool,
+      rangeArray: PropTypes.array,
     };
 
     static defaultProps = {
@@ -52,10 +54,18 @@ export default function createSlider(Component) {
       disabled: false,
       dots: false,
       vertical: false,
+      scalable: false,
     };
 
     constructor(props) {
       super(props);
+
+      this.state = {
+        sections: 1,
+        section: 1,
+        sectionMin: props.min,
+        sectionMax: props.max,
+      };
 
       if (process.env.NODE_ENV !== 'production') {
         const { step, max, min } = props;
@@ -166,10 +176,25 @@ export default function createSlider(Component) {
         slider.clientHeight : slider.clientWidth;
     }
 
+    selectSection(ratio, sections) {
+      ratio = ratio >= 1 ? 1 : ratio;
+      return sections > 1 ? Math.ceil(ratio / (1 / sections)) || 1 : 1;
+    }
+
     calcValue(offset) {
-      const { vertical, min, max } = this.props;
+      const { vertical, min, max, scalable, rangeArray } = this.props;
       const ratio = Math.abs(Math.max(offset, 0) / this.getSliderLength());
-      const value = vertical ? (1 - ratio) * (max - min) + min : ratio * (max - min) + min;
+      const sections = scalable ? rangeArray.length - 1 : 1;
+      const section = this.selectSection(ratio, sections);
+      const sectionMin = scalable ? rangeArray[section - 1] : min;
+      const sectionMax = scalable ? rangeArray[section] : max;
+      this.setState({ section, sections, sectionMin, sectionMax });
+      // const section_r = ratio * ((sections + 1) - section);
+      const sectionRatio = (ratio - ((1 / sections) * (section - 1))) * sections;
+      const value = vertical ?
+          (1 - sectionRatio) * (sectionMax - sectionMin) + sectionMin
+        :
+          sectionRatio * (sectionMax - sectionMin) + sectionMin;
       return value;
     }
 
@@ -180,9 +205,9 @@ export default function createSlider(Component) {
     }
 
     calcOffset(value) {
-      const { min, max } = this.props;
-      const ratio = (value - min) / (max - min);
-      return ratio * 100;
+      const { sectionMax, sectionMin, sections, section } = this.state;
+      const ratio = (value - sectionMin) / (sectionMax - sectionMin);
+      return (ratio * (100 / sections)) + ((100 / sections) * (section - 1));
     }
 
     saveSlider = (slider) => {

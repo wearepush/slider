@@ -4,6 +4,9 @@ require('rc-slider/assets/index.less');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Slider = require('rc-slider');
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const SliderWithTooltip = createSliderWithTooltip(Slider);
+
 
 const style = { width: 400, margin: 50 };
 
@@ -79,6 +82,15 @@ const DynamicBounds = React.createClass({
 
 ReactDOM.render(
   <div>
+    <div style={style}>
+      <p>Scale Slider</p>
+      <SliderWithTooltip
+        tipTransitionName="rc-slider-tooltip-zoom-down"
+        onChange={log}
+        rangeArray={[0, 10, 100]}
+        scalable
+      />
+    </div>
     <div style={style}>
       <p>Basic Slider</p>
       <Slider tipTransitionName="rc-slider-tooltip-zoom-down" onChange={log} />
