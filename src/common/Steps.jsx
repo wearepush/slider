@@ -2,12 +2,15 @@ import React from 'react';
 import classNames from 'classnames';
 import warning from 'warning';
 
-const calcPoints = (vertical, marks, dots, step, min, max) => {
+const calcPoints = (vertical, marks, dots, step, min, max, scalable, rangeArray) => {
   warning(
     dots ? step > 0 : true,
     '`Slider[step]` should be a positive number in order to make Slider[dots] work.'
   );
-  const points = Object.keys(marks).map(parseFloat);
+  const points = scalable ?
+      rangeArray.slice(1, rangeArray.length - 1).map(parseFloat)
+    :
+      Object.keys(marks).map(parseFloat);
   if (dots) {
     for (let i = min; i <= max; i = i + step) {
       if (points.indexOf(i) >= 0) continue;
@@ -18,10 +21,14 @@ const calcPoints = (vertical, marks, dots, step, min, max) => {
 };
 
 const Steps = ({ prefixCls, vertical, marks, dots, step, included,
-                lowerBound, upperBound, max, min }) => {
+                lowerBound, upperBound, max, min, scalable, rangeArray }) => {
   const range = max - min;
-  const elements = calcPoints(vertical, marks, dots, step, min, max).map((point) => {
-    const offset = `${Math.abs(point - min) / range * 100}%`;
+  const points = calcPoints(vertical, marks, dots, step, min, max, scalable, rangeArray);
+  const elements = points.map((point, i) => {
+    const offset = scalable ?
+        `${(i + 1) * (100 / (points.length + 1))}%`
+      :
+        `${Math.abs(point - min) / range * 100}%`;
     const style = vertical ? { bottom: offset } : { left: offset };
 
     const isActived = (!included && point === upperBound) ||

@@ -55,7 +55,7 @@ export default function createSlider(Component) {
       dots: false,
       vertical: false,
       scalable: false,
-      rangeArray: [0, 100],
+      rangeArray: [],
     };
 
     constructor(props) {
@@ -67,6 +67,20 @@ export default function createSlider(Component) {
         sectionMin: props.min,
         sectionMax: props.max,
       };
+
+      const setRangeArray = () => {
+        const { rangeArray, min, max } = props;
+        let tempArray = [...rangeArray];
+        if (parseFloat(tempArray[0]) !== parseFloat(min)) {
+          tempArray = [min, ...tempArray];
+        }
+        if (parseFloat(tempArray[tempArray.length - 1]) !== parseFloat(max)) {
+          tempArray = [...tempArray, max];
+        }
+        return tempArray;
+      };
+
+      this.rangeArray = setRangeArray();
 
       if (process.env.NODE_ENV !== 'production') {
         const { step, max, min } = props;
@@ -83,18 +97,18 @@ export default function createSlider(Component) {
 
     componentWillMount() {
       const { value } = this.state;
-      const { scalable, rangeArray, min, max } = this.props;
-      if (scalable && rangeArray && rangeArray.length > 1) {
+      const { scalable, min, max } = this.props;
+      if (scalable && this.rangeArray && this.rangeArray.length > 1) {
         let section = undefined;
-        for (let i = 1; i < rangeArray.length; i++) {
-          if (value >= rangeArray[i - 1] && value < rangeArray[i]) section = i;
+        for (let i = 1; i < this.rangeArray.length; i++) {
+          if (value >= this.rangeArray[i - 1] && value < this.rangeArray[i]) section = i;
         }
         this.sectionsState = {
           ...this.sectionsState,
           section: section || 1,
-          sections: rangeArray.length - 1,
-          sectionMin: rangeArray[section - 1] || min,
-          sectionMax: rangeArray[section] || max,
+          sections: this.rangeArray.length - 1,
+          sectionMin: this.rangeArray[section - 1] || min,
+          sectionMax: this.rangeArray[section] || max,
         };
       }
       if (super.componentWillMount) super.componentWillMount();
@@ -202,12 +216,12 @@ export default function createSlider(Component) {
     }
 
     calcValue(offset) {
-      const { vertical, min, max, scalable, rangeArray } = this.props;
+      const { vertical, min, max, scalable } = this.props;
       const ratio = Math.abs(Math.max(offset, 0) / this.getSliderLength());
-      const sections = scalable ? rangeArray.length - 1 : 1;
+      const sections = scalable ? this.rangeArray.length - 1 : 1;
       const section = this.selectSection(ratio, sections);
-      const sectionMin = scalable ? rangeArray[section - 1] : min;
-      const sectionMax = scalable ? rangeArray[section] : max;
+      const sectionMin = scalable ? this.rangeArray[section - 1] : min;
+      const sectionMax = scalable ? this.rangeArray[section] : max;
       this.sectionsState = { ...this.sectionsState, section, sections, sectionMin, sectionMax };
       // const section_r = ratio * ((sections + 1) - section);
       const sectionRatio = (ratio - ((1 / sections) * (section - 1))) * sections;
@@ -253,7 +267,6 @@ export default function createSlider(Component) {
         children,
         style,
         scalable,
-        rangeArray,
       } = this.props;
       const { tracks, handles } = super.render();
 
@@ -264,6 +277,7 @@ export default function createSlider(Component) {
         [`${prefixCls}-vertical`]: vertical,
         [className]: className,
       });
+
       return (
         <div
           ref={this.saveSlider}
@@ -285,6 +299,8 @@ export default function createSlider(Component) {
             upperBound={this.getUpperBound()}
             max={max}
             min={min}
+            scalable={scalable}
+            rangeArray={this.rangeArray}
           />
           {handles}
           <Marks
@@ -297,7 +313,7 @@ export default function createSlider(Component) {
             max={max}
             min={min}
             scalable={scalable}
-            rangeArray={rangeArray}
+            rangeArray={this.rangeArray}
           />
           {children}
         </div>
