@@ -26038,6 +26038,7 @@
 	        vertical = _props.vertical,
 	        included = _props.included,
 	        disabled = _props.disabled,
+	        withLabel = _props.withLabel,
 	        handleGenerator = _props.handle;
 	    var _state = this.state,
 	        value = _state.value,
@@ -26051,6 +26052,7 @@
 	      value: value,
 	      dragging: dragging,
 	      disabled: disabled,
+	      withLabel: withLabel,
 	      ref: function ref(h) {
 	        return _this2.saveHandle(0, h);
 	      }
@@ -27483,6 +27485,7 @@
 	    vertical: _react.PropTypes.bool,
 	    style: _react.PropTypes.object,
 	    scalable: _react.PropTypes.bool,
+	    withLabel: _react.PropTypes.bool,
 	    rangeArray: _react.PropTypes.array
 	  }), _class.defaultProps = (0, _extends3.default)({}, Component.defaultProps, {
 	    prefixCls: 'rc-slider',
@@ -27496,7 +27499,7 @@
 	          restProps = (0, _objectWithoutProperties3.default)(_ref, ['index']);
 	
 	      delete restProps.dragging;
-	      delete restProps.value;
+	      // delete restProps.value;
 	      return _react2.default.createElement(_Handle2.default, (0, _extends3.default)({}, restProps, { key: index }));
 	    },
 	
@@ -27508,6 +27511,7 @@
 	    dots: false,
 	    vertical: false,
 	    scalable: false,
+	    withLabel: false,
 	    rangeArray: []
 	  }), _temp;
 	}
@@ -28104,11 +28108,20 @@
 	        className = _props.className,
 	        vertical = _props.vertical,
 	        offset = _props.offset,
-	        restProps = (0, _objectWithoutProperties3.default)(_props, ['className', 'vertical', 'offset']);
-	
+	        withLabel = _props.withLabel,
+	        value = _props.value,
+	        restProps = (0, _objectWithoutProperties3.default)(_props, ['className', 'vertical', 'offset', 'withLabel', 'value']);
 	
 	    var style = vertical ? { bottom: offset + '%' } : { left: offset + '%' };
-	    return _react2.default.createElement('div', (0, _extends3.default)({}, restProps, { className: className, style: style }));
+	    return _react2.default.createElement(
+	      'div',
+	      (0, _extends3.default)({}, restProps, { className: className, style: style }),
+	      withLabel && _react2.default.createElement(
+	        'div',
+	        { className: className + '-label' },
+	        value
+	      )
+	    );
 	  };
 	
 	  return Handle;
@@ -28120,7 +28133,9 @@
 	Handle.propTypes = {
 	  className: _react.PropTypes.string,
 	  vertical: _react.PropTypes.bool,
-	  offset: _react.PropTypes.number
+	  withLabel: _react.PropTypes.bool,
+	  offset: _react.PropTypes.number,
+	  value: _react.PropTypes.number
 	};
 	module.exports = exports['default'];
 

@@ -42,6 +42,24 @@
   border-color: #57c5f7;
   box-shadow: 0 0 5px #57c5f7;
 }
+.rc-slider-handle-label {
+  padding: 3px 5px;
+  position: absolute;
+  min-width: 18px;
+  height: 18px;
+  font-size: 12px;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  background-color: #6c6c6c;
+  border-radius: 6px;
+  box-shadow: 0 0 4px #d9d9d9;
+  left: 50%;
+  top: -24px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
 .rc-slider-mark {
   position: absolute;
   top: 18px;
