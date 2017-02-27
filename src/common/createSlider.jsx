@@ -31,6 +31,7 @@ export default function createSlider(Component) {
       vertical: PropTypes.bool,
       style: PropTypes.object,
       scalable: PropTypes.bool,
+      withLabel: PropTypes.bool,
       rangeArray: PropTypes.array,
     };
 
@@ -44,7 +45,7 @@ export default function createSlider(Component) {
       marks: {},
       handle({ index, ...restProps }) {
         delete restProps.dragging;
-        delete restProps.value;
+        // delete restProps.value;
         return <Handle {...restProps} key={index} />;
       },
       onBeforeChange: noop,
@@ -55,6 +56,7 @@ export default function createSlider(Component) {
       dots: false,
       vertical: false,
       scalable: false,
+      withLabel: false,
       rangeArray: [],
     };
 
