@@ -25873,7 +25873,7 @@
 	
 	var _Range2 = _interopRequireDefault(_Range);
 	
-	var _Handle = __webpack_require__(314);
+	var _Handle = __webpack_require__(324);
 	
 	var _Handle2 = _interopRequireDefault(_Handle);
 	
@@ -25927,7 +25927,7 @@
 	
 	var _createSlider2 = _interopRequireDefault(_createSlider);
 	
-	var _utils = __webpack_require__(315);
+	var _utils = __webpack_require__(325);
 	
 	var utils = _interopRequireWildcard(_utils);
 	
@@ -27127,6 +27127,10 @@
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
+	var _toConsumableArray2 = __webpack_require__(310);
+	
+	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+	
 	var _classCallCheck2 = __webpack_require__(259);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -27149,27 +27153,27 @@
 	
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 	
-	var _classnames = __webpack_require__(310);
+	var _classnames = __webpack_require__(320);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _warning = __webpack_require__(311);
+	var _warning = __webpack_require__(321);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _Steps = __webpack_require__(312);
+	var _Steps = __webpack_require__(322);
 	
 	var _Steps2 = _interopRequireDefault(_Steps);
 	
-	var _Marks = __webpack_require__(313);
+	var _Marks = __webpack_require__(323);
 	
 	var _Marks2 = _interopRequireDefault(_Marks);
 	
-	var _Handle = __webpack_require__(314);
+	var _Handle = __webpack_require__(324);
 	
 	var _Handle2 = _interopRequireDefault(_Handle);
 	
-	var _utils = __webpack_require__(315);
+	var _utils = __webpack_require__(325);
 	
 	var utils = _interopRequireWildcard(_utils);
 	
@@ -27256,6 +27260,23 @@
 	        sectionMax: props.max
 	      };
 	
+	      var setRangeArray = function setRangeArray() {
+	        var rangeArray = props.rangeArray,
+	            min = props.min,
+	            max = props.max;
+	
+	        var tempArray = [].concat((0, _toConsumableArray3.default)(rangeArray));
+	        if (parseFloat(tempArray[0]) !== parseFloat(min)) {
+	          tempArray = [min].concat((0, _toConsumableArray3.default)(tempArray));
+	        }
+	        if (parseFloat(tempArray[tempArray.length - 1]) !== parseFloat(max)) {
+	          tempArray = [].concat((0, _toConsumableArray3.default)(tempArray), [max]);
+	        }
+	        return tempArray;
+	      };
+	
+	      _this.rangeArray = setRangeArray();
+	
 	      if (process.env.NODE_ENV !== 'production') {
 	        var step = props.step,
 	            max = props.max,
@@ -27272,20 +27293,19 @@
 	      var value = this.state.value;
 	      var _props = this.props,
 	          scalable = _props.scalable,
-	          rangeArray = _props.rangeArray,
 	          min = _props.min,
 	          max = _props.max;
 	
-	      if (scalable && rangeArray && rangeArray.length > 1) {
+	      if (scalable && this.rangeArray && this.rangeArray.length > 1) {
 	        var section = undefined;
-	        for (var i = 1; i < rangeArray.length; i++) {
-	          if (value >= rangeArray[i - 1] && value < rangeArray[i]) section = i;
+	        for (var i = 1; i < this.rangeArray.length; i++) {
+	          if (value >= this.rangeArray[i - 1] && value < this.rangeArray[i]) section = i;
 	        }
 	        this.sectionsState = (0, _extends3.default)({}, this.sectionsState, {
 	          section: section || 1,
-	          sections: rangeArray.length - 1,
-	          sectionMin: rangeArray[section - 1] || min,
-	          sectionMax: rangeArray[section] || max
+	          sections: this.rangeArray.length - 1,
+	          sectionMin: this.rangeArray[section - 1] || min,
+	          sectionMax: this.rangeArray[section] || max
 	        });
 	      }
 	      if (_Component.prototype.componentWillMount) _Component.prototype.componentWillMount.call(this);
@@ -27343,14 +27363,13 @@
 	          vertical = _props2.vertical,
 	          min = _props2.min,
 	          max = _props2.max,
-	          scalable = _props2.scalable,
-	          rangeArray = _props2.rangeArray;
+	          scalable = _props2.scalable;
 	
 	      var ratio = Math.abs(Math.max(offset, 0) / this.getSliderLength());
-	      var sections = scalable ? rangeArray.length - 1 : 1;
+	      var sections = scalable ? this.rangeArray.length - 1 : 1;
 	      var section = this.selectSection(ratio, sections);
-	      var sectionMin = scalable ? rangeArray[section - 1] : min;
-	      var sectionMax = scalable ? rangeArray[section] : max;
+	      var sectionMin = scalable ? this.rangeArray[section - 1] : min;
+	      var sectionMax = scalable ? this.rangeArray[section] : max;
 	      this.sectionsState = (0, _extends3.default)({}, this.sectionsState, { section: section, sections: sections, sectionMin: sectionMin, sectionMax: sectionMax });
 	      // const section_r = ratio * ((sections + 1) - section);
 	      var sectionRatio = (ratio - 1 / sections * (section - 1)) * sections;
@@ -27395,14 +27414,14 @@
 	          max = _props3.max,
 	          children = _props3.children,
 	          style = _props3.style,
-	          scalable = _props3.scalable,
-	          rangeArray = _props3.rangeArray;
+	          scalable = _props3.scalable;
 	
 	      var _Component$prototype$ = _Component.prototype.render.call(this),
 	          tracks = _Component$prototype$.tracks,
 	          handles = _Component$prototype$.handles;
 	
 	      var sliderClassName = (0, _classnames2.default)((_classNames = {}, (0, _defineProperty3.default)(_classNames, prefixCls, true), (0, _defineProperty3.default)(_classNames, prefixCls + '-with-marks', Object.keys(marks).length), (0, _defineProperty3.default)(_classNames, prefixCls + '-disabled', disabled), (0, _defineProperty3.default)(_classNames, prefixCls + '-vertical', vertical), (0, _defineProperty3.default)(_classNames, className, className), _classNames));
+	
 	      return _react2.default.createElement(
 	        'div',
 	        {
@@ -27424,7 +27443,9 @@
 	          lowerBound: this.getLowerBound(),
 	          upperBound: this.getUpperBound(),
 	          max: max,
-	          min: min
+	          min: min,
+	          scalable: scalable,
+	          rangeArray: this.rangeArray
 	        }),
 	        handles,
 	        _react2.default.createElement(_Marks2.default, {
@@ -27437,7 +27458,7 @@
 	          max: max,
 	          min: min,
 	          scalable: scalable,
-	          rangeArray: rangeArray
+	          rangeArray: this.rangeArray
 	        }),
 	        children
 	      );
@@ -27487,7 +27508,7 @@
 	    dots: false,
 	    vertical: false,
 	    scalable: false,
-	    rangeArray: [0, 100]
+	    rangeArray: []
 	  }), _temp;
 	}
 	module.exports = exports['default'];
@@ -27550,6 +27571,199 @@
 /* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	exports.__esModule = true;
+	
+	var _from = __webpack_require__(311);
+	
+	var _from2 = _interopRequireDefault(_from);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (arr) {
+	  if (Array.isArray(arr)) {
+	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	      arr2[i] = arr[i];
+	    }
+	
+	    return arr2;
+	  } else {
+	    return (0, _from2.default)(arr);
+	  }
+	};
+
+/***/ },
+/* 311 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(312), __esModule: true };
+
+/***/ },
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(264);
+	__webpack_require__(313);
+	module.exports = __webpack_require__(193).Array.from;
+
+/***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var ctx            = __webpack_require__(194)
+	  , $export        = __webpack_require__(191)
+	  , toObject       = __webpack_require__(224)
+	  , call           = __webpack_require__(314)
+	  , isArrayIter    = __webpack_require__(315)
+	  , toLength       = __webpack_require__(215)
+	  , createProperty = __webpack_require__(316)
+	  , getIterFn      = __webpack_require__(317);
+	
+	$export($export.S + $export.F * !__webpack_require__(319)(function(iter){ Array.from(iter); }), 'Array', {
+	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
+	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
+	    var O       = toObject(arrayLike)
+	      , C       = typeof this == 'function' ? this : Array
+	      , aLen    = arguments.length
+	      , mapfn   = aLen > 1 ? arguments[1] : undefined
+	      , mapping = mapfn !== undefined
+	      , index   = 0
+	      , iterFn  = getIterFn(O)
+	      , length, result, step, iterator;
+	    if(mapping)mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
+	    // if object isn't iterable or it's array with default iterator - use simple case
+	    if(iterFn != undefined && !(C == Array && isArrayIter(iterFn))){
+	      for(iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++){
+	        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
+	      }
+	    } else {
+	      length = toLength(O.length);
+	      for(result = new C(length); length > index; index++){
+	        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
+	      }
+	    }
+	    result.length = index;
+	    return result;
+	  }
+	});
+
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// call something on iterator step with safe closing on error
+	var anObject = __webpack_require__(198);
+	module.exports = function(iterator, fn, value, entries){
+	  try {
+	    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
+	  // 7.4.6 IteratorClose(iterator, completion)
+	  } catch(e){
+	    var ret = iterator['return'];
+	    if(ret !== undefined)anObject(ret.call(iterator));
+	    throw e;
+	  }
+	};
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// check on default Array iterator
+	var Iterators  = __webpack_require__(269)
+	  , ITERATOR   = __webpack_require__(275)('iterator')
+	  , ArrayProto = Array.prototype;
+	
+	module.exports = function(it){
+	  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
+	};
+
+/***/ },
+/* 316 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $defineProperty = __webpack_require__(197)
+	  , createDesc      = __webpack_require__(205);
+	
+	module.exports = function(object, index, value){
+	  if(index in object)$defineProperty.f(object, index, createDesc(0, value));
+	  else object[index] = value;
+	};
+
+/***/ },
+/* 317 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var classof   = __webpack_require__(318)
+	  , ITERATOR  = __webpack_require__(275)('iterator')
+	  , Iterators = __webpack_require__(269);
+	module.exports = __webpack_require__(193).getIteratorMethod = function(it){
+	  if(it != undefined)return it[ITERATOR]
+	    || it['@@iterator']
+	    || Iterators[classof(it)];
+	};
+
+/***/ },
+/* 318 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// getting tag from 19.1.3.6 Object.prototype.toString()
+	var cof = __webpack_require__(212)
+	  , TAG = __webpack_require__(275)('toStringTag')
+	  // ES3 wrong here
+	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
+	
+	// fallback for IE11 Script Access Denied error
+	var tryGet = function(it, key){
+	  try {
+	    return it[key];
+	  } catch(e){ /* empty */ }
+	};
+	
+	module.exports = function(it){
+	  var O, T, B;
+	  return it === undefined ? 'Undefined' : it === null ? 'Null'
+	    // @@toStringTag case
+	    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+	    // builtinTag case
+	    : ARG ? cof(O)
+	    // ES3 arguments fallback
+	    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+	};
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ITERATOR     = __webpack_require__(275)('iterator')
+	  , SAFE_CLOSING = false;
+	
+	try {
+	  var riter = [7][ITERATOR]();
+	  riter['return'] = function(){ SAFE_CLOSING = true; };
+	  Array.from(riter, function(){ throw 2; });
+	} catch(e){ /* empty */ }
+	
+	module.exports = function(exec, skipClosing){
+	  if(!skipClosing && !SAFE_CLOSING)return false;
+	  var safe = false;
+	  try {
+	    var arr  = [7]
+	      , iter = arr[ITERATOR]();
+	    iter.next = function(){ return {done: safe = true}; };
+	    arr[ITERATOR] = function(){ return iter; };
+	    exec(arr);
+	  } catch(e){ /* empty */ }
+	  return safe;
+	};
+
+/***/ },
+/* 320 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	  Copyright (c) 2016 Jed Watson.
 	  Licensed under the MIT License (MIT), see
@@ -27601,7 +27815,7 @@
 
 
 /***/ },
-/* 311 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27668,7 +27882,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
-/* 312 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27685,19 +27899,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(310);
+	var _classnames = __webpack_require__(320);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _warning = __webpack_require__(311);
+	var _warning = __webpack_require__(321);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var calcPoints = function calcPoints(vertical, marks, dots, step, min, max) {
+	var calcPoints = function calcPoints(vertical, marks, dots, step, min, max, scalable, rangeArray) {
 	  (0, _warning2.default)(dots ? step > 0 : true, '`Slider[step]` should be a positive number in order to make Slider[dots] work.');
-	  var points = Object.keys(marks).map(parseFloat);
+	  var points = scalable ? rangeArray.slice(1, rangeArray.length - 1).map(parseFloat) : Object.keys(marks).map(parseFloat);
 	  if (dots) {
 	    for (var i = min; i <= max; i = i + step) {
 	      if (points.indexOf(i) >= 0) continue;
@@ -27717,13 +27931,16 @@
 	      lowerBound = _ref.lowerBound,
 	      upperBound = _ref.upperBound,
 	      max = _ref.max,
-	      min = _ref.min;
+	      min = _ref.min,
+	      scalable = _ref.scalable,
+	      rangeArray = _ref.rangeArray;
 	
 	  var range = max - min;
-	  var elements = calcPoints(vertical, marks, dots, step, min, max).map(function (point) {
+	  var points = calcPoints(vertical, marks, dots, step, min, max, scalable, rangeArray);
+	  var elements = points.map(function (point, i) {
 	    var _classNames;
 	
-	    var offset = Math.abs(point - min) / range * 100 + '%';
+	    var offset = scalable ? (i + 1) * (100 / (points.length + 1)) + '%' : Math.abs(point - min) / range * 100 + '%';
 	    var style = vertical ? { bottom: offset } : { left: offset };
 	
 	    var isActived = !included && point === upperBound || included && point <= upperBound && point >= lowerBound;
@@ -27743,7 +27960,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 313 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27768,7 +27985,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(310);
+	var _classnames = __webpack_require__(320);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -27839,7 +28056,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 314 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27908,7 +28125,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 315 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27917,7 +28134,7 @@
 	  value: true
 	});
 	
-	var _toConsumableArray2 = __webpack_require__(316);
+	var _toConsumableArray2 = __webpack_require__(310);
 	
 	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 	
@@ -28018,199 +28235,6 @@
 	}
 
 /***/ },
-/* 316 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	
-	var _from = __webpack_require__(317);
-	
-	var _from2 = _interopRequireDefault(_from);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function (arr) {
-	  if (Array.isArray(arr)) {
-	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-	      arr2[i] = arr[i];
-	    }
-	
-	    return arr2;
-	  } else {
-	    return (0, _from2.default)(arr);
-	  }
-	};
-
-/***/ },
-/* 317 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(318), __esModule: true };
-
-/***/ },
-/* 318 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(264);
-	__webpack_require__(319);
-	module.exports = __webpack_require__(193).Array.from;
-
-/***/ },
-/* 319 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var ctx            = __webpack_require__(194)
-	  , $export        = __webpack_require__(191)
-	  , toObject       = __webpack_require__(224)
-	  , call           = __webpack_require__(320)
-	  , isArrayIter    = __webpack_require__(321)
-	  , toLength       = __webpack_require__(215)
-	  , createProperty = __webpack_require__(322)
-	  , getIterFn      = __webpack_require__(323);
-	
-	$export($export.S + $export.F * !__webpack_require__(325)(function(iter){ Array.from(iter); }), 'Array', {
-	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
-	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
-	    var O       = toObject(arrayLike)
-	      , C       = typeof this == 'function' ? this : Array
-	      , aLen    = arguments.length
-	      , mapfn   = aLen > 1 ? arguments[1] : undefined
-	      , mapping = mapfn !== undefined
-	      , index   = 0
-	      , iterFn  = getIterFn(O)
-	      , length, result, step, iterator;
-	    if(mapping)mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
-	    // if object isn't iterable or it's array with default iterator - use simple case
-	    if(iterFn != undefined && !(C == Array && isArrayIter(iterFn))){
-	      for(iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++){
-	        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
-	      }
-	    } else {
-	      length = toLength(O.length);
-	      for(result = new C(length); length > index; index++){
-	        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
-	      }
-	    }
-	    result.length = index;
-	    return result;
-	  }
-	});
-
-
-/***/ },
-/* 320 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// call something on iterator step with safe closing on error
-	var anObject = __webpack_require__(198);
-	module.exports = function(iterator, fn, value, entries){
-	  try {
-	    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
-	  // 7.4.6 IteratorClose(iterator, completion)
-	  } catch(e){
-	    var ret = iterator['return'];
-	    if(ret !== undefined)anObject(ret.call(iterator));
-	    throw e;
-	  }
-	};
-
-/***/ },
-/* 321 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// check on default Array iterator
-	var Iterators  = __webpack_require__(269)
-	  , ITERATOR   = __webpack_require__(275)('iterator')
-	  , ArrayProto = Array.prototype;
-	
-	module.exports = function(it){
-	  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
-	};
-
-/***/ },
-/* 322 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var $defineProperty = __webpack_require__(197)
-	  , createDesc      = __webpack_require__(205);
-	
-	module.exports = function(object, index, value){
-	  if(index in object)$defineProperty.f(object, index, createDesc(0, value));
-	  else object[index] = value;
-	};
-
-/***/ },
-/* 323 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var classof   = __webpack_require__(324)
-	  , ITERATOR  = __webpack_require__(275)('iterator')
-	  , Iterators = __webpack_require__(269);
-	module.exports = __webpack_require__(193).getIteratorMethod = function(it){
-	  if(it != undefined)return it[ITERATOR]
-	    || it['@@iterator']
-	    || Iterators[classof(it)];
-	};
-
-/***/ },
-/* 324 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// getting tag from 19.1.3.6 Object.prototype.toString()
-	var cof = __webpack_require__(212)
-	  , TAG = __webpack_require__(275)('toStringTag')
-	  // ES3 wrong here
-	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
-	
-	// fallback for IE11 Script Access Denied error
-	var tryGet = function(it, key){
-	  try {
-	    return it[key];
-	  } catch(e){ /* empty */ }
-	};
-	
-	module.exports = function(it){
-	  var O, T, B;
-	  return it === undefined ? 'Undefined' : it === null ? 'Null'
-	    // @@toStringTag case
-	    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-	    // builtinTag case
-	    : ARG ? cof(O)
-	    // ES3 arguments fallback
-	    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-	};
-
-/***/ },
-/* 325 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var ITERATOR     = __webpack_require__(275)('iterator')
-	  , SAFE_CLOSING = false;
-	
-	try {
-	  var riter = [7][ITERATOR]();
-	  riter['return'] = function(){ SAFE_CLOSING = true; };
-	  Array.from(riter, function(){ throw 2; });
-	} catch(e){ /* empty */ }
-	
-	module.exports = function(exec, skipClosing){
-	  if(!skipClosing && !SAFE_CLOSING)return false;
-	  var safe = false;
-	  try {
-	    var arr  = [7]
-	      , iter = arr[ITERATOR]();
-	    iter.next = function(){ return {done: safe = true}; };
-	    arr[ITERATOR] = function(){ return iter; };
-	    exec(arr);
-	  } catch(e){ /* empty */ }
-	  return safe;
-	};
-
-/***/ },
 /* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -28224,7 +28248,7 @@
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	var _toConsumableArray2 = __webpack_require__(316);
+	var _toConsumableArray2 = __webpack_require__(310);
 	
 	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 	
@@ -28248,7 +28272,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(310);
+	var _classnames = __webpack_require__(320);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -28260,7 +28284,7 @@
 	
 	var _createSlider2 = _interopRequireDefault(_createSlider);
 	
-	var _utils = __webpack_require__(315);
+	var _utils = __webpack_require__(325);
 	
 	var utils = _interopRequireWildcard(_utils);
 	
@@ -28680,7 +28704,7 @@
 	
 	var _rcTooltip2 = _interopRequireDefault(_rcTooltip);
 	
-	var _Handle = __webpack_require__(314);
+	var _Handle = __webpack_require__(324);
 	
 	var _Handle2 = _interopRequireDefault(_Handle);
 	
