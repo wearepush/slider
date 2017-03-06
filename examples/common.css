@@ -60,6 +60,10 @@
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
 }
+.rc-slider-handle-label--bottom {
+  top: auto;
+  bottom: -24px;
+}
 .rc-slider-mark {
   position: absolute;
   top: 18px;

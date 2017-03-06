@@ -28093,6 +28093,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _classnames = __webpack_require__(320);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Handle = function (_React$Component) {
@@ -28118,7 +28122,9 @@
 	      (0, _extends3.default)({}, restProps, { className: className, style: style }),
 	      withLabel && _react2.default.createElement(
 	        'div',
-	        { className: className + '-label' },
+	        {
+	          className: (0, _classnames2.default)(className + '-label', typeof withLabel === 'string' && className + '-label--' + withLabel)
+	        },
 	        value
 	      )
 	    );
