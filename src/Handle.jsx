@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 export default class Handle extends React.Component {
   render() {
@@ -6,7 +7,13 @@ export default class Handle extends React.Component {
     const style = vertical ? { bottom: `${offset}%` } : { left: `${offset}%` };
     return (
       <div {...restProps} className={className} style={style}>
-        {withLabel && <div className={`${className}-label`}>{value}</div>}
+        {withLabel &&
+          <div
+            className={ cx(
+              `${className}-label`,
+              typeof withLabel === 'string' && `${className}-label--${withLabel}`
+            ) }
+          >{value}</div>}
       </div>
     );
   }
