@@ -31,7 +31,7 @@ export default function createSlider(Component) {
       vertical: PropTypes.bool,
       style: PropTypes.object,
       scalable: PropTypes.bool,
-      withLabel: PropTypes.bool,
+      withLabel: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
       rangeArray: PropTypes.array,
     };
 

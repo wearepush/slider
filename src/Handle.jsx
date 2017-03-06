@@ -22,7 +22,7 @@ export default class Handle extends React.Component {
 Handle.propTypes = {
   className: PropTypes.string,
   vertical: PropTypes.bool,
-  withLabel: PropTypes.bool,
+  withLabel: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   offset: PropTypes.number,
   value: PropTypes.number,
 };
