@@ -27485,7 +27485,7 @@
 	    vertical: _react.PropTypes.bool,
 	    style: _react.PropTypes.object,
 	    scalable: _react.PropTypes.bool,
-	    withLabel: _react.PropTypes.bool,
+	    withLabel: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.string]),
 	    rangeArray: _react.PropTypes.array
 	  }), _class.defaultProps = (0, _extends3.default)({}, Component.defaultProps, {
 	    prefixCls: 'rc-slider',
@@ -28139,7 +28139,7 @@
 	Handle.propTypes = {
 	  className: _react.PropTypes.string,
 	  vertical: _react.PropTypes.bool,
-	  withLabel: _react.PropTypes.bool,
+	  withLabel: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.string]),
 	  offset: _react.PropTypes.number,
 	  value: _react.PropTypes.number
 	};
