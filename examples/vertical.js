@@ -1,30 +1,40 @@
 webpackJsonp([4],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(331);
+	module.exports = __webpack_require__(315);
 
 
-/***/ },
+/***/ }),
 
-/***/ 331:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 315:
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	__webpack_require__(3);
+	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-slider/assets/index.less\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	
-	var React = __webpack_require__(5);
-	var ReactDOM = __webpack_require__(36);
-	var Slider = __webpack_require__(256);
+	var _react = __webpack_require__(42);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(78);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _rcSlider = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"rc-slider\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _rcSlider2 = _interopRequireDefault(_rcSlider);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var style = { float: 'left', width: 160, height: 400, marginBottom: 160, marginLeft: 50 };
 	var parentStyle = { overflow: 'hidden' };
 	
 	var marks = {
 	  '-10': '-10°C',
-	  0: React.createElement(
+	  0: _react2.default.createElement(
 	    'strong',
 	    null,
 	    '0\xB0C'
@@ -36,7 +46,7 @@ webpackJsonp([4],{
 	    style: {
 	      color: 'red'
 	    },
-	    label: React.createElement(
+	    label: _react2.default.createElement(
 	      'strong',
 	      null,
 	      '100\xB0C'
@@ -48,74 +58,74 @@ webpackJsonp([4],{
 	  console.log(value); //eslint-disable-line
 	}
 	
-	ReactDOM.render(React.createElement(
+	_reactDom2.default.render(_react2.default.createElement(
 	  'div',
 	  { style: parentStyle },
-	  React.createElement(
+	  _react2.default.createElement(
 	    'div',
 	    { style: style },
-	    React.createElement(
+	    _react2.default.createElement(
 	      'p',
 	      null,
 	      'Slider with marks, `step=null`'
 	    ),
-	    React.createElement(Slider, { vertical: true, min: -10, marks: marks, step: null, onChange: log, defaultValue: 20 })
+	    _react2.default.createElement(_rcSlider2.default, { vertical: true, min: -10, marks: marks, step: null, onChange: log, defaultValue: 20 })
 	  ),
-	  React.createElement(
+	  _react2.default.createElement(
 	    'div',
 	    { style: style },
-	    React.createElement(
+	    _react2.default.createElement(
 	      'p',
 	      null,
 	      'Slider with marks and steps'
 	    ),
-	    React.createElement(Slider, { vertical: true, dots: true, min: -10, marks: marks, step: 10, onChange: log, defaultValue: 20 })
+	    _react2.default.createElement(_rcSlider2.default, { vertical: true, dots: true, min: -10, marks: marks, step: 10, onChange: log, defaultValue: 20 })
 	  ),
-	  React.createElement(
+	  _react2.default.createElement(
 	    'div',
 	    { style: style },
-	    React.createElement(
+	    _react2.default.createElement(
 	      'p',
 	      null,
 	      'Slider with marks, `included=false`'
 	    ),
-	    React.createElement(Slider, { vertical: true, min: -10, marks: marks, included: false, defaultValue: 20 })
+	    _react2.default.createElement(_rcSlider2.default, { vertical: true, min: -10, marks: marks, included: false, defaultValue: 20 })
 	  ),
-	  React.createElement(
+	  _react2.default.createElement(
 	    'div',
 	    { style: style },
-	    React.createElement(
+	    _react2.default.createElement(
 	      'p',
 	      null,
 	      'Slider with marks and steps, `included=false`'
 	    ),
-	    React.createElement(Slider, { vertical: true, min: -10, marks: marks, step: 10, included: false, defaultValue: 20 })
+	    _react2.default.createElement(_rcSlider2.default, { vertical: true, min: -10, marks: marks, step: 10, included: false, defaultValue: 20 })
 	  ),
-	  React.createElement(
+	  _react2.default.createElement(
 	    'div',
 	    { style: style },
-	    React.createElement(
+	    _react2.default.createElement(
 	      'p',
 	      null,
 	      'Range with marks'
 	    ),
-	    React.createElement(Slider.Range, { vertical: true, min: -10, marks: marks, onChange: log, defaultValue: [20, 40] })
+	    _react2.default.createElement(_rcSlider2.default.Range, { vertical: true, min: -10, marks: marks, onChange: log, defaultValue: [20, 40] })
 	  ),
-	  React.createElement(
+	  _react2.default.createElement(
 	    'div',
 	    { style: style },
-	    React.createElement(
+	    _react2.default.createElement(
 	      'p',
 	      null,
 	      'Range with marks and steps'
 	    ),
-	    React.createElement(Slider.Range, { vertical: true, min: -10, marks: marks, step: 10,
+	    _react2.default.createElement(_rcSlider2.default.Range, { vertical: true, min: -10, marks: marks, step: 10,
 	      onChange: log, defaultValue: [20, 40]
 	    })
 	  )
 	), document.getElementById('__react-content'));
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=vertical.js.map
