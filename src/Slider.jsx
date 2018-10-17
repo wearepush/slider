@@ -1,18 +1,17 @@
 /* eslint-disable react/prop-types */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import warning from 'warning';
 import Track from './common/Track';
 import createSlider from './common/createSlider';
 import * as utils from './utils';
 
 class Slider extends React.Component {
-  static displayName = 'Slider';
   static propTypes = {
     defaultValue: PropTypes.number,
     value: PropTypes.number,
     disabled: PropTypes.bool,
   };
-
-  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -26,6 +25,16 @@ class Slider extends React.Component {
       value: this.trimAlignValue(value),
       dragging: false,
     };
+    if (process.env.NODE_ENV !== 'production') {
+      warning(
+        !('minimumTrackStyle' in props),
+        'minimumTrackStyle will be deprecate, please use trackStyle instead.'
+      );
+      warning(
+        !('maximumTrackStyle' in props),
+        'maximumTrackStyle will be deprecate, please use railStyle instead.'
+      );
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,12 +86,26 @@ class Slider extends React.Component {
 
   onMove(e, position) {
     utils.pauseEvent(e);
-    const state = this.state;
+    const { value: oldValue } = this.state;
     const value = this.calcValueByPos(position);
-    const oldValue = state.value;
     if (value === oldValue) return;
 
     this.onChange({ value });
+  }
+
+  onKeyboard(e) {
+    const valueMutator = utils.getKeyboardValueMutator(e);
+
+    if (valueMutator) {
+      utils.pauseEvent(e);
+      const state = this.state;
+      const oldValue = state.value;
+      const mutatedValue = valueMutator(oldValue, this.props);
+      const value = this.trimAlignValue(mutatedValue);
+      if (value === oldValue) return;
+
+      this.onChange({ value });
+    }
   }
 
   getValue() {
@@ -110,6 +133,11 @@ class Slider extends React.Component {
       included,
       disabled,
       withLabel,
+      minimumTrackStyle,
+      trackStyle,
+      handleStyle,
+      min,
+      max,
       handle: handleGenerator,
     } = this.props;
     const { value, dragging } = this.state;
@@ -122,8 +150,13 @@ class Slider extends React.Component {
       dragging,
       disabled,
       withLabel,
+      min,
+      max,
+      style: handleStyle[0] || handleStyle,
       ref: h => this.saveHandle(0, h),
     });
+
+    const _trackStyle = trackStyle[0] || trackStyle;
     const track = (
       <Track
         className={`${prefixCls}-track`}
@@ -131,6 +164,10 @@ class Slider extends React.Component {
         included={included}
         offset={0}
         length={offset}
+        style={{
+          ...minimumTrackStyle,
+          ..._trackStyle,
+        }}
       />
     );
 

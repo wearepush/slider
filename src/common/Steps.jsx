@@ -21,7 +21,7 @@ const calcPoints = (vertical, marks, dots, step, min, max, scalable, rangeArray)
 };
 
 const Steps = ({ prefixCls, vertical, marks, dots, step, included,
-                lowerBound, upperBound, max, min, scalable, rangeArray }) => {
+                lowerBound, upperBound, max, min, scalable, rangeArray, dotStyle, activeDotStyle }) => {
   const range = max - min;
   const points = calcPoints(vertical, marks, dots, step, min, max, scalable, rangeArray);
   const elements = points.map((point, i) => {
@@ -33,6 +33,11 @@ const Steps = ({ prefixCls, vertical, marks, dots, step, included,
 
     const isActived = (!included && point === upperBound) ||
             (included && point <= upperBound && point >= lowerBound);
+    let style = vertical ? { bottom: offset, ...dotStyle } : { left: offset, ...dotStyle };
+    if (isActived) {
+      style = { ...style, ...activeDotStyle };
+    }
+
     const pointClassName = classNames({
       [`${prefixCls}-dot`]: true,
       [`${prefixCls}-dot-active`]: isActived,

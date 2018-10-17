@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import shallowEqual from 'shallowequal';
+import warning from 'warning';
 import Track from './common/Track';
 import createSlider from './common/createSlider';
 import * as utils from './utils';
@@ -47,6 +50,11 @@ class Range extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!('value' in nextProps || 'min' in nextProps || 'max' in nextProps)) return;
+    if (this.props.min === nextProps.min &&
+        this.props.max === nextProps.max &&
+        shallowEqual(this.props.value, nextProps.value)) {
+      return;
+    }
     const { bounds } = this.state;
     const value = nextProps.value || bounds;
     const nextBounds = value.map(v => this.trimAlignValue(v, nextProps));
@@ -129,6 +137,10 @@ class Range extends React.Component {
     });
   }
 
+  onKeyboard() {
+    warning(true, 'Keyboard support is not yet supported for ranges.');
+  }
+
   getValue() {
     return this.state.bounds;
   }
@@ -149,7 +161,8 @@ class Range extends React.Component {
     const { bounds, recent } = this.state;
     let boundNeedMoving = closestBound;
     const isAtTheSamePoint = (bounds[closestBound + 1] === bounds[closestBound]);
-    if (isAtTheSamePoint) {
+
+    if (isAtTheSamePoint && bounds[recent] === bounds[closestBound]) {
       boundNeedMoving = recent;
     }
 
@@ -281,7 +294,11 @@ class Range extends React.Component {
       vertical,
       included,
       disabled,
+      min,
+      max,
       handle: handleGenerator,
+      trackStyle,
+      handleStyle,
     } = this.props;
 
     const offsets = bounds.map(v => this.calcOffset(v));
@@ -297,7 +314,10 @@ class Range extends React.Component {
       value: v,
       dragging: handle === i,
       index: i,
+      min,
+      max,
       disabled,
+      style: handleStyle[i],
       ref: h => this.saveHandle(i, h),
     }));
 
@@ -314,6 +334,7 @@ class Range extends React.Component {
           included={included}
           offset={offsets[i - 1]}
           length={offsets[i] - offsets[i - 1]}
+          style={trackStyle[index]}
           key={i}
         />
       );

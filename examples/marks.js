@@ -1,8 +1,8 @@
-require('scalable-slider/assets/index.less');
+import 'scalable-slider/assets/index.less';
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Slider = require('scalable-slider');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Slider from 'scalable-slider';
 
 const style = { width: 400, margin: 50 };
 const marks = {
@@ -45,7 +45,7 @@ ReactDOM.render(
 
     <div style={style}>
       <p>Range with marks</p>
-      <Slider.Range min={-10} marks={marks} onChange={log} defaultValue={[20, 40]} />
+      <Slider.Range min={-10} marks={marks} onChange={log} defaultValue={[20, 25, 30, 40]} />
     </div>
     <div style={style}>
       <p>Range with marks and steps</p>

@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 
-require('scalable-slider/assets/index.less');
-require('rc-tooltip/assets/bootstrap.css');
+import 'scalable-slider/assets/index.less';
+import 'rc-tooltip/assets/bootstrap.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Tooltip from 'rc-tooltip';
+import Slider from 'scalable-slider';
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Tooltip = require('rc-tooltip');
-const Slider = require('scalable-slider');
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 const Handle = Slider.Handle;
@@ -15,12 +15,13 @@ const handle = (props) => {
   const { value, dragging, index, ...restProps } = props;
   return (
     <Tooltip
+      prefixCls="rc-slider-tooltip"
       overlay={value}
       visible={dragging}
       placement="top"
       key={index}
     >
-      <Handle {...restProps} />
+      <Handle value={value} {...restProps} />
     </Tooltip>
   );
 };
@@ -34,7 +35,7 @@ ReactDOM.render(
     </div>
     <div style={wrapperStyle}>
       <p>Range with custom handle</p>
-      <Range min={0} max={20} defaultValue={[3, 10]} />
+      <Range min={0} max={20} defaultValue={[3, 10]} tipFormatter={value => `${value}%`} />
     </div>
   </div>,
   document.getElementById('__react-content')

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import classNames from 'classnames';
 import warning from 'warning';
@@ -33,6 +34,13 @@ export default function createSlider(Component) {
       scalable: PropTypes.bool,
       withLabel: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
       rangeArray: PropTypes.array,
+      minimumTrackStyle: PropTypes.object, // just for compatibility, will be deperecate
+      maximumTrackStyle: PropTypes.object, // just for compatibility, will be deperecate
+      handleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+      trackStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+      railStyle: PropTypes.object,
+      dotStyle: PropTypes.object,
+      activeDotStyle: PropTypes.object,
     };
 
     static defaultProps = {
@@ -45,7 +53,6 @@ export default function createSlider(Component) {
       marks: {},
       handle({ index, ...restProps }) {
         delete restProps.dragging;
-        // delete restProps.value;
         return <Handle {...restProps} key={index} />;
       },
       onBeforeChange: noop,
@@ -58,6 +65,11 @@ export default function createSlider(Component) {
       scalable: false,
       withLabel: false,
       rangeArray: [],
+      trackStyle: [{}],
+      handleStyle: [{}],
+      railStyle: {},
+      dotStyle: {},
+      activeDotStyle: {},
     };
 
     constructor(props) {
@@ -93,7 +105,6 @@ export default function createSlider(Component) {
           step
         );
       }
-
       this.handlesRefs = {};
     }
 
@@ -155,6 +166,22 @@ export default function createSlider(Component) {
       utils.pauseEvent(e);
     }
 
+    onFocus = (e) => {
+      const isVertical = this.props.vertical;
+
+      if (utils.isEventFromHandle(e, this.handlesRefs)) {
+        const handlePosition = utils.getHandleCenterPosition(isVertical, e.target);
+
+        this.dragOffset = 0;
+        this.onStart(handlePosition);
+        utils.pauseEvent(e);
+      }
+    }
+
+    onBlur = (e) => {
+      this.onEnd(e);
+    };
+
     addDocumentTouchEvents() {
       // just work for Chrome iOS Safari and Android Browser
       this.onTouchMoveListener = addEventListener(document, 'touchmove', this.onTouchMove);
@@ -195,6 +222,12 @@ export default function createSlider(Component) {
       this.onMove(e, position - this.dragOffset);
     }
 
+    onKeyDown = (e) => {
+      if (this.sliderRef && utils.isEventFromHandle(e, this.handlesRefs)) {
+        this.onKeyboard(e);
+      }
+    }
+
     getSliderStart() {
       const slider = this.sliderRef;
       const rect = slider.getBoundingClientRect();
@@ -208,8 +241,8 @@ export default function createSlider(Component) {
         return 0;
       }
 
-      return this.props.vertical ?
-        slider.clientHeight : slider.clientWidth;
+      const coords = slider.getBoundingClientRect();
+      return this.props.vertical ? coords.height : coords.width;
     }
 
     selectSection(ratio, sections) {
@@ -267,13 +300,16 @@ export default function createSlider(Component) {
         min,
         max,
         children,
+        maximumTrackStyle,
         style,
         scalable,
+        railStyle,
+        dotStyle,
+        activeDotStyle,
       } = this.props;
       const { tracks, handles } = super.render();
 
-      const sliderClassName = classNames({
-        [prefixCls]: true,
+      const sliderClassName = classNames(prefixCls, {
         [`${prefixCls}-with-marks`]: Object.keys(marks).length,
         [`${prefixCls}-disabled`]: disabled,
         [`${prefixCls}-vertical`]: vertical,
@@ -286,9 +322,18 @@ export default function createSlider(Component) {
           className={sliderClassName}
           onTouchStart={disabled ? noop : this.onTouchStart}
           onMouseDown={disabled ? noop : this.onMouseDown}
+          onKeyDown={disabled ? noop : this.onKeyDown}
+          onFocus={disabled ? noop : this.onFocus}
+          onBlur={disabled ? noop : this.onBlur}
           style={style}
         >
-          <div className={`${prefixCls}-rail`} />
+          <div
+            className={`${prefixCls}-rail`}
+            style={{
+              ...maximumTrackStyle,
+              ...railStyle,
+            }}
+          />
           {tracks}
           <Steps
             prefixCls={prefixCls}
@@ -303,6 +348,8 @@ export default function createSlider(Component) {
             min={min}
             scalable={scalable}
             rangeArray={this.rangeArray}
+            dotStyle={dotStyle}
+            activeDotStyle={activeDotStyle}
           />
           {handles}
           <Marks

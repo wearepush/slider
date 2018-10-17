@@ -27,6 +27,7 @@
   padding: 5px 0;
   width: 100%;
   border-radius: @border-radius-base;
+  touch-action: none;
   .borderBox();
 
   &-rail {
@@ -34,6 +35,7 @@
     width: 100%;
     background-color: #e9e9e9;
     height: 4px;
+    border-radius: @border-radius-base;
   }
 
   &-track {
@@ -51,18 +53,26 @@
     width: 14px;
     height: 14px;
     cursor: pointer;
+    cursor: -webkit-grab;
+    cursor: grab;
     border-radius: 50%;
     border: solid 2px tint(@primary-color, 50%);
     background-color: #fff;
+    touch-action: pan-x;
 
     &:hover {
       border-color: tint(@primary-color, 20%);
     }
-    &-active {
-      &:active {
-        border-color: tint(@primary-color, 20%);
-        box-shadow: 0 0 5px tint(@primary-color, 20%);
-      }
+    &:active {
+      border-color: tint(@primary-color, 20%);
+      box-shadow: 0 0 5px tint(@primary-color, 20%);
+      cursor: -webkit-grabbing;
+      cursor: grabbing;
+    }
+    &:focus {
+      border-color: tint(@primary-color, 20%);
+      box-shadow: 0 0 0 5px tint(@primary-color, 50%);
+      outline: none;
     }
     &-label {
       padding: 3px 5px;
@@ -147,6 +157,7 @@
 
     .@{prefixClass}-handle, .@{prefixClass}-dot {
       border-color: @disabledColor;
+      box-shadow: none;
       background-color: #fff;
       cursor: not-allowed;
     }
@@ -177,6 +188,7 @@
     &-handle {
       margin-left: -5px;
       margin-bottom: -7px;
+      touch-action: pan-y;
     }
 
     &-mark {

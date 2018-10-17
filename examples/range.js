@@ -1,41 +1,42 @@
-/* eslint react/no-multi-comp: 0 */
-require('scalable-slider/assets/index.less');
+/* eslint react/no-multi-comp: 0, no-console: 0 */
+import 'scalable-slider/assets/index.less';
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Slider = require('scalable-slider');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Slider from 'scalable-slider';
+
 const Range = Slider.Range;
-
 const style = { width: 400, margin: 50 };
 
 function log(value) {
   console.log(value); //eslint-disable-line
 }
 
-const CustomizedRange = React.createClass({
-  getInitialState() {
-    return {
+class CustomizedRange extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       lowerBound: 20,
       upperBound: 40,
       value: [20, 40],
     };
-  },
-  onLowerBoundChange(e) {
+  }
+  onLowerBoundChange = (e) => {
     this.setState({ lowerBound: +e.target.value });
-  },
-  onUpperBoundChange(e) {
+  }
+  onUpperBoundChange = (e) => {
     this.setState({ upperBound: +e.target.value });
-  },
-  onSliderChange(value) {
+  }
+  onSliderChange = (value) => {
     log(value);
     this.setState({
       value,
     });
-  },
-  handleApply() {
+  }
+  handleApply = () => {
     const { lowerBound, upperBound } = this.state;
     this.setState({ value: [lowerBound, upperBound] });
-  },
+  }
   render() {
     return (
       <div>
@@ -50,29 +51,30 @@ const CustomizedRange = React.createClass({
         <Range allowCross={false} value={this.state.value} onChange={this.onSliderChange} />
       </div>
     );
-  },
-});
+  }
+}
 
-const DynamicBounds = React.createClass({
-  getInitialState() {
-    return {
+class DynamicBounds extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       min: 0,
       max: 100,
     };
-  },
-  onSliderChange(value) {
+  }
+  onSliderChange = (value) => {
     log(value);
-  },
-  onMinChange(e) {
+  }
+  onMinChange = (e) => {
     this.setState({
       min: +e.target.value || 0,
     });
-  },
-  onMaxChange(e) {
+  }
+  onMaxChange = (e) => {
     this.setState({
       max: +e.target.value || 100,
     });
-  },
+  }
   render() {
     return (
       <div>
@@ -87,8 +89,8 @@ const DynamicBounds = React.createClass({
         />
       </div>
     );
-  },
-});
+  }
+}
 
 class ControlledRange extends React.Component {
   constructor(props) {
@@ -105,6 +107,27 @@ class ControlledRange extends React.Component {
   render() {
     return (
       <Range value={this.state.value} onChange={this.handleChange}/>
+    );
+  }
+}
+
+// https://github.com/react-component/slider/issues/226
+class PureRenderRange extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      foo: false,
+    };
+  }
+  handleChange = (value) => {
+    console.log(value);
+    this.setState({
+      foo: !this.state.foo,
+    });
+  }
+  render() {
+    return (
+      <Range defaultValue={[20, 40, 60, 80]} onChange={this.handleChange} allowCross={false} />
     );
   }
 }
@@ -136,12 +159,24 @@ ReactDOM.render(
       <Range count={3} defaultValue={[20, 40, 60, 80]} pushable />
     </div>
     <div style={style}>
+      <p>Multi Range with custom track and handle style</p>
+      <Range count={3} defaultValue={[20, 40, 60, 80]} pushable
+        trackStyle={[{ backgroundColor: 'red' }, { backgroundColor: 'green' }]}
+        handleStyle={[{ backgroundColor: 'yellow' }, { backgroundColor: 'gray' }]}
+        railStyle={{ backgroundColor: 'black' }}
+      />
+    </div>
+    <div style={style}>
       <p>Customized Range</p>
       <CustomizedRange />
     </div>
     <div style={style}>
       <p>Range with dynamic `max` `min`</p>
       <DynamicBounds />
+    </div>
+    <div style={style}>
+      <p>Range as child component</p>
+      <PureRenderRange />
     </div>
   </div>
   , document.getElementById('__react-content'));

@@ -14,7 +14,8 @@ const Marks = ({
 }) => {
   const marksKeys = scalable ? rangeArray.slice(1, rangeArray.length - 1) : Object.keys(marks);
   const marksCount = marksKeys.length;
-  const unit = 100 / (marksCount);
+
+  const unit = marksCount > 1 ? 100 / (marksCount) : 100;
   const markWidth = unit * 0.9;
 
   const range = max - min;

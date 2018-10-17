@@ -58,6 +58,13 @@ const Range = createSliderWithTooltip(Slider.Range);
 
 [Online demo](http://react-component.github.io/slider/examples/handle.html)
 
+After Range or Slider was wrapped by createSliderWithTooltip, it will have the following props:
+
+| Name         | Type    | Default | Description |
+| ------------ | ------- | ------- | ----------- |
+| tipFormatter | (value: number): React.ReactNode | `value => value` | A function to format tooltip's overlay |
+| tipProps | Object | `{` <br>`placement: 'top',` <br> ` prefixCls: 'rc-slider-tooltip',` <br> `overlay: tipFormatter(value)` <br> `}` | A function to format tooltip's overlay |
+
 ### Common API
 
 The following APIs are shared by Slider and Range.
@@ -77,6 +84,13 @@ The following APIs are shared by Slider and Range.
 | onBeforeChange | Function | NOOP | `onBeforeChange` will be triggered when `ontouchstart` or `onmousedown` is triggered. |
 | onChange | Function | NOOP | `onChange` will be triggered while the value of Slider changing. |
 | onAfterChange | Function | NOOP | `onAfterChange` will be triggered when `ontouchend` or `onmouseup` is triggered. |
+| minimumTrackStyle | Object |  | please use  `trackStyle` instead. (`only used for slider, just for compatibility , will be deprecate at rc-slider@9.x `) |
+| maximumTrackStyle | Object |  | please use  `railStyle` instead (`only used for slider, just for compatibility , will be deprecate at rc-slider@9.x`) |
+| handleStyle | Array[Object] \| Object | `[{}]` | The style used for handle. (`both for slider(`Object`) and range(`Array of Object`), the array will be used for mutli handle follow element order`) |
+| trackStyle | Array[Object] \| Object | `[{}]` | The style used for track. (`both for slider(`Object`) and range(`Array of Object`), the array will be used for mutli track follow element order`)|w
+| railStyle | Object | `{}` | The style used for the track base color.  |
+| dotStyle | Object | `{}` | The style used for the dots. |
+| activeDotStyle | Object | `{}` | The style used for the active dots. |
 
 ### Slider
 
@@ -93,7 +107,7 @@ The following APIs are shared by Slider and Range.
 | value | `number[]` | | Set current positions of handles. |
 | count | number | `1` | Determine how many ranges to render, and multiple handles will be rendered (number + 1). |
 | allowCross | boolean | `true` | `allowCross` could be set as `true` to allow those handles to cross. |
-| pushable | boolean or number | `true` | `pushable` could be set as `true` to allow pushing of surrounding handles when moving an handle. When set to a number, the number will be the minimum ensured distance between handles. Example: ![](http://i.giphy.com/l46Cs36c9HrHMExoc.gif) |
+| pushable | boolean or number | `false` | `pushable` could be set as `true` to allow pushing of surrounding handles when moving an handle. When set to a number, the number will be the minimum ensured distance between handles. Example: ![](http://i.giphy.com/l46Cs36c9HrHMExoc.gif) |
 
 ## Development
 
