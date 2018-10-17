@@ -1,6 +1,5 @@
 {
   "name": "scalable-slider",
-
   "version": "1.0.7",
   "description": "Scalable slider UI component for React",
   "keywords": [
@@ -28,7 +27,10 @@
   "license": "MIT",
   "main": "./lib/index.js",
   "entry": {
-    "scalable-slider": ["./assets/index.less", "./src/index.js"]
+    "scalable-slider": [
+      "./assets/index.less",
+      "./src/index.js"
+    ]
   },
   "style": "./assets/index.css",
   "config": {

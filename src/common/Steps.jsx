@@ -20,8 +20,22 @@ const calcPoints = (vertical, marks, dots, step, min, max, scalable, rangeArray)
   return points;
 };
 
-const Steps = ({ prefixCls, vertical, marks, dots, step, included,
-                lowerBound, upperBound, max, min, scalable, rangeArray, dotStyle, activeDotStyle }) => {
+const Steps = ({
+    prefixCls,
+    vertical,
+    marks,
+    dots,
+    step,
+    included,
+    lowerBound,
+    upperBound,
+    max,
+    min,
+    scalable,
+    rangeArray,
+    dotStyle,
+    activeDotStyle,
+  }) => {
   const range = max - min;
   const points = calcPoints(vertical, marks, dots, step, min, max, scalable, rangeArray);
   const elements = points.map((point, i) => {
@@ -29,7 +43,6 @@ const Steps = ({ prefixCls, vertical, marks, dots, step, included,
         `${(i + 1) * (100 / (points.length + 1))}%`
       :
         `${Math.abs(point - min) / range * 100}%`;
-    const style = vertical ? { bottom: offset } : { left: offset };
 
     const isActived = (!included && point === upperBound) ||
             (included && point <= upperBound && point >= lowerBound);

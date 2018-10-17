@@ -41,6 +41,7 @@ export default function createSlider(Component) {
       railStyle: PropTypes.object,
       dotStyle: PropTypes.object,
       activeDotStyle: PropTypes.object,
+      withMarks: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -70,6 +71,7 @@ export default function createSlider(Component) {
       railStyle: {},
       dotStyle: {},
       activeDotStyle: {},
+      withMarks: true,
     };
 
     constructor(props) {
@@ -306,6 +308,7 @@ export default function createSlider(Component) {
         railStyle,
         dotStyle,
         activeDotStyle,
+        withMarks,
       } = this.props;
       const { tracks, handles } = super.render();
 
@@ -352,18 +355,21 @@ export default function createSlider(Component) {
             activeDotStyle={activeDotStyle}
           />
           {handles}
-          <Marks
-            className={`${prefixCls}-mark`}
-            vertical={vertical}
-            marks={marks}
-            included={included}
-            lowerBound={this.getLowerBound()}
-            upperBound={this.getUpperBound()}
-            max={max}
-            min={min}
-            scalable={scalable}
-            rangeArray={this.rangeArray}
-          />
+          {
+            withMarks &&
+            <Marks
+              className={`${prefixCls}-mark`}
+              vertical={vertical}
+              marks={marks}
+              included={included}
+              lowerBound={this.getLowerBound()}
+              upperBound={this.getUpperBound()}
+              max={max}
+              min={min}
+              scalable={scalable}
+              rangeArray={this.rangeArray}
+            />
+          }
           {children}
         </div>
       );
