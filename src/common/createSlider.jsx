@@ -276,9 +276,24 @@ export default function createSlider(Component) {
     }
 
     calcOffset(value) {
-      const { sectionMax, sectionMin, sections, section } = this.sectionsState;
-      const ratio = (value - sectionMin) / (sectionMax - sectionMin);
-      return (ratio * (100 / sections)) + ((100 / sections) * (section - 1));
+      const { sections } = this.sectionsState;
+
+      const rangeLength = this.rangeArray.length;
+      let nextSection = 0;
+      for (let i = 0; i < rangeLength - 1; i++) {
+        if (value < this.rangeArray[i]) {
+          break;
+        }
+        nextSection++;
+      }
+
+      const sectionSize = 100 / sections;
+      const offset = (nextSection - 1) * sectionSize;
+      const nextSectionMin = this.rangeArray[nextSection - 1];
+      const nextSectionMax = this.rangeArray[nextSection];
+
+      const ratio = (value - nextSectionMin) / (nextSectionMax - nextSectionMin);
+      return (ratio * sectionSize) + offset;
     }
 
     saveSlider = (slider) => {
